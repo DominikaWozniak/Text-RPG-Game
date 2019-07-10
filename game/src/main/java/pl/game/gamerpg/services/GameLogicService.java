@@ -1,6 +1,5 @@
 package pl.game.gamerpg.services;
 
-import pl.game.gamerpg.model.ResultBattle;
 
 public interface GameLogicService {
 

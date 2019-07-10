@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Dragon extends Person {
 
+
     public void setStatsForDragon(){
         setName("Drogon");
         setLifePoints(200);

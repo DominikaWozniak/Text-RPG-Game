@@ -27,6 +27,8 @@ public class GameLogicServiceImpl implements GameLogicService {
     @Override
     public void battleWithThief() {
         thief.setStatsForThief();
+        thief.setDataToArrayEnemiesAttacks();
+
         System.out.println("Okazuje się, że jest to okoliczny: " + thief.getCharacterType());
         System.out.println("o imieniu: " + thief.getName());
         System.out.println(thief.getName() + " atakuje Cię jako pierwszy.");
@@ -37,7 +39,7 @@ public class GameLogicServiceImpl implements GameLogicService {
 
 
             System.out.println(thief.getCharacterType() + " użył ataku: "
-                                                                    + thief.drawAttack()
+                                                                    + thief.enemyChooseAction()
                                                             + " DAMAGE: " + thief.getAttackPoints());
 
             player.setLifePointsAfterAttack(player.getLifePoints() - thief.getAttackPoints());

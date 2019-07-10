@@ -13,29 +13,24 @@ import pl.game.gamerpg.components.JavaUtilObjectsDI;
 @Getter
 public class Player extends Person {
 
-    private CharacterAttackPlayer[] attacksArray;
     private JavaUtilObjectsDI javaUtilObjectsDI;
+    private CharacterAttackPlayer[] attacksArray;
     private Thief thief;
 
-    @Autowired
-    public Player(JavaUtilObjectsDI javaUtilObjectsDI, Thief thief) {
-        this.javaUtilObjectsDI = javaUtilObjectsDI;
-        this.thief = thief;
-    }
 
-    public void setDataToArraysAttacks(){
+
+    public void setDataToArrayPlayerAttack(){
+        attacksArray = new CharacterAttackPlayer[3];
+
        if (getCharacterType() == CharacterType.CZARODZIEJ) {
-           attacksArray = new CharacterAttackPlayer[3];
            attacksArray[0] = CharacterAttackPlayer.FALA_UDERZENIOWA;
            attacksArray[1] = CharacterAttackPlayer.ELEKTRYCZNA_KULA;
            attacksArray[2] = CharacterAttackPlayer.MAGICZNY_OGIEŃ;
        } else if (getCharacterType() == CharacterType.BARBARZYŃCA) {
-           attacksArray = new CharacterAttackPlayer[3];
            attacksArray[0] = CharacterAttackPlayer.CIOS_TARCZĄ;
            attacksArray[1] = CharacterAttackPlayer.KOPNIAK;
            attacksArray[2] = CharacterAttackPlayer.CIOS_TOPOREM;
        } else if (getCharacterType() == CharacterType.RYCERZ){
-           attacksArray = new CharacterAttackPlayer[3];
            attacksArray[0] = CharacterAttackPlayer.PCHNIĘCIE_MIECZEM;
            attacksArray[1] = CharacterAttackPlayer.CIĘCIE_KLINGĄ;
            attacksArray[2] = CharacterAttackPlayer.UDERZENIE_TARCZĄ;

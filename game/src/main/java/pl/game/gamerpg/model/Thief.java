@@ -9,9 +9,6 @@ public class Thief extends Person {
     private JavaUtilObjectsDI javaUtilObjectsDI;
     private CharacterAttackEnemy[] attackThiefArray;
 
-    public Thief(JavaUtilObjectsDI javaUtilObjectsDI) {
-        this.javaUtilObjectsDI = javaUtilObjectsDI;
-    }
 
     public void setStatsForThief(){
         setName("Eustachy");
@@ -19,13 +16,13 @@ public class Thief extends Person {
         setCharacterType(CharacterType.ZŁODZIEJ);
     }
 
-    public CharacterAttackEnemy drawAttack(){
+    /*public CharacterAttackEnemy drawAttack(){
         attackThiefArray = new CharacterAttackEnemy[3];
         attackThiefArray[0] = CharacterAttackEnemy.KOPNIĘCIE;
         attackThiefArray[1] = CharacterAttackEnemy.CIĘCIE_SZTYLETEM;
         attackThiefArray[2] = CharacterAttackEnemy.UDERZENIE_PIĘŚCIĄ;
         int i;
-        i = javaUtilObjectsDI.random().nextInt(3) + 1;
+        i = getJavaUtilObjectsDI().random().nextInt(3) + 1;
         if (i == 1) {
             return attackThiefArray[0];
         } else if (i==2) {
@@ -33,6 +30,6 @@ public class Thief extends Person {
         } else{
             return attackThiefArray[2];
         }
-    }
+    }*/
 
 }

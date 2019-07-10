@@ -11,7 +11,7 @@ import pl.game.gamerpg.model.Player;
 public class PlayerServiceImpl implements PlayerService {
 
     private Player player;
-    private JavaUtilObjectsDI scannerDI;
+    private JavaUtilObjectsDI javaUtilObjectsDI;
 
 
     @Override
@@ -24,7 +24,7 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public void getNamePlayerFromConsole() {
         System.out.println("Nazwij swoją postać.");
-        player.setName(scannerDI.scanner().nextLine());
+        player.setName(javaUtilObjectsDI.scanner().nextLine());
         System.out.println("Twoje imię: " + player.getName());
 
     }
@@ -32,22 +32,22 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public void getCharacterTypeFromPlayer() {
 
-        String auxiliaryVarCharacterType;
+        String i;
 
         System.out.println("Dostępne klasy postaci: ");
         System.out.println("1) CZARODZIEJ, 2) RYCERZ, 3) BARBARZYŃCA");
         System.out.println("Wybierz klasę wpisując jej numer (1,2,3) w konsoli i wciśnij ENTER");
-        auxiliaryVarCharacterType = scannerDI.scanner().nextLine();
+        i = javaUtilObjectsDI.scanner().nextLine();
 
-        if (auxiliaryVarCharacterType.equalsIgnoreCase(String.valueOf(1))){
+        if (i.equalsIgnoreCase(String.valueOf(1))){
             player.setCharacterType(CharacterType.CZARODZIEJ);
-        } else if (auxiliaryVarCharacterType.equalsIgnoreCase(String.valueOf(2))) {
+        } else if (i.equalsIgnoreCase(String.valueOf(2))) {
             player.setCharacterType(CharacterType.RYCERZ);
-        } else if (auxiliaryVarCharacterType.equalsIgnoreCase(String.valueOf(3))) {
+        } else if (i.equalsIgnoreCase(String.valueOf(3))) {
             player.setCharacterType(CharacterType.BARBARZYŃCA);
         }
 
-        player.setDataToArraysAttacks();
+        player.setDataToArrayPlayerAttack();
 
     }
 
