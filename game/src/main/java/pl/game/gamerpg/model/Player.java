@@ -52,9 +52,9 @@ public class Player extends Person {
     }
 
     public ResultBattle resultBattle(){
-        if (getLifePointsAfterAttack() > thief.getLifePointsAfterAttack()) {
+        if (getLifePoints() > thief.getLifePoints()) {
             return  ResultBattle.YOU_WIN;
-        } else if (getLifePointsAfterAttack() == thief.getLifePointsAfterAttack()) {
+        } else if (getLifePoints() == thief.getLifePoints()) {
             return ResultBattle.DRAW;
         } else return ResultBattle.YOU_LOSE;
     }

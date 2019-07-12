@@ -15,13 +15,12 @@ public class GameLogicServiceImpl implements GameLogicService {
     private Dragon dragon;
     private JavaUtilObjectsDI javaUtilObjectsDI;
 
-
-
     @Override
     public void storyAboutAdventure() {
         System.out.println("Gra rozpoczęta.");
         System.out.println("Podróżujesz przez tajemnicze krainy by uwolnić księżniczkę.");
-        System.out.println("Na swojej drodze spotykasz pierwszego wroga. Musisz z nim walczyć.");
+        System.out.println("Na swojej drodze spotykasz pierwszego wroga, który chce Cię zabić");
+        System.out.println("Musisz z nim walczyć.");
     }
 
     @Override
@@ -31,49 +30,65 @@ public class GameLogicServiceImpl implements GameLogicService {
 
         System.out.println("Okazuje się, że jest to okoliczny: " + thief.getCharacterType());
         System.out.println("o imieniu: " + thief.getName());
-        System.out.println(thief.getName() + " atakuje Cię jako pierwszy.");
 
         while (true) {
             player.setAttackPoints(javaUtilObjectsDI.random().nextInt(50));
             thief.setAttackPoints(javaUtilObjectsDI.random().nextInt(50));
 
+                System.out.println("Wybierz atak: ");
 
-            System.out.println(thief.getCharacterType() + " użył ataku: "
-                                                                    + thief.enemyChooseAction()
-                                                            + " DAMAGE: " + thief.getAttackPoints());
+                player.playerChooseAction();
+                System.out.println("Twoje punkty ataku: " + player.getAttackPoints());
 
-            player.setLifePointsAfterAttack(player.getLifePoints() - thief.getAttackPoints());
-            player.setLifePoints(player.getLifePointsAfterAttack());
+                thief.setLifePointsAfterAttack(thief.getLifePoints() - player.getAttackPoints());
+                thief.setLifePoints(thief.getLifePointsAfterAttack());
 
+                if (thief.getLifePointsAfterAttack() > 0) {
+                    System.out.println("Energia " + thief.getCharacterType()
+                                                            + " po ataku: "
+                                                            + thief.getLifePointsAfterAttack());
+                }
 
+                System.out.println(thief.getCharacterType() + " atakuje. Korzysta z: "
+                                                                            + thief.enemyChooseAction());
 
-                System.out.println("Twoja energia po ataku: "
-                        + player.getLifePointsAfterAttack()
-                        + " Wybierz atak: ");
+                System.out.println(thief.getCharacterType() + " zadaje punkty obrażeń: "
+                                                                            + thief.getAttackPoints());
 
+                player.setLifePointsAfterAttack(player.getLifePoints() - thief.getAttackPoints());
+                player.setLifePoints(player.getLifePointsAfterAttack());
 
-            player.playerChooseAction();
+                if (player.getLifePointsAfterAttack() > 0) {
+                    System.out.println("Twoja energia po ataku: " + player.getLifePointsAfterAttack());
+                }
 
-            System.out.println("Twoje punkty ataku: " + player.getAttackPoints());
+                if (player.getLifePoints() <= 0
+                        || thief.getLifePoints() <= 0
+                        || player.getLifePoints() == thief.getLifePoints()) {
+                    System.out.println(player.resultBattle());
+                }
 
-            thief.setLifePointsAfterAttack(thief.getLifePoints() - player.getAttackPoints());
-            thief.setLifePoints(thief.getLifePointsAfterAttack());
-
-            System.out.println("Energia " + thief.getCharacterType() + " po ataku: "
-                                                                + thief.getLifePointsAfterAttack());
-
-            System.out.println("Wynik walkii: " + player.resultBattle());
-
-            if (player.getLifePointsAfterAttack() <= 0 || thief.getLifePointsAfterAttack() <= 0) {
+            if (player.getLifePoints() <= 0 || thief.getLifePoints() <= 0) {
                 break;
             }
+        }
+
+        if (player.resultBattle() == ResultBattle.YOU_LOSE) {
+            System.out.println("MIAŁEŚ MNIEJ PUNKTÓW ŻYCIA OD"
+                                                    + thief.getCharacterType()
+                                                    + "Zaczynamy od początku: ");
+            player.setLifePoints(150);
+            storyAboutAdventure();
+            battleWithThief();
         }
 
     }
 
     @Override
     public void battleWithGuard() {
-        //not implement yet
+        player.setLifePoints(160);
+        System.out.println("Posiadasz teraz " + player.getLifePoints() +" punktów energii.");
+
     }
 
     @Override
