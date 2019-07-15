@@ -20,6 +20,7 @@ public class GameController {
         playerService.statsInfo();
         gameLogicService.storyAboutAdventure();
         gameLogicService.battleWithThief();
+        gameLogicService.battleWithGuard();
     }
 
 

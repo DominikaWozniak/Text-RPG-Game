@@ -69,6 +69,10 @@ public class PlayerServiceImpl implements PlayerService {
         }
 
         System.out.println("Aby wybrać atak podczas walki wpisz (1, 2, 3) w konsoli i wciśnij ENTER");
+        System.out.println("Aby rozpocząć grę, wziśnij ENTER");
+
+        String enter;
+        enter = javaUtilObjectsDI.scanner().nextLine();
 
     }
 
