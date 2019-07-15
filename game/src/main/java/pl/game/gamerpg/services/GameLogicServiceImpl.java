@@ -86,6 +86,7 @@ public class GameLogicServiceImpl implements GameLogicService {
     @Override
     public void battleWithGuard() {
         player.setLifePoints(160);
+        guard.setStatsForGuard();
         System.out.println("Posiadasz teraz " + player.getLifePoints() +" punktów energii.");
         System.out.println("Jesteś w połowie drogi do celu.");
         System.out.println("Zmierzasz w kierunku mostu na którym stoi strażnik, który nie chce Cię przepuścić.");
