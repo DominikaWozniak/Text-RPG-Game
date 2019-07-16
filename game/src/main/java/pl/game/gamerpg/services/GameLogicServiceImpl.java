@@ -10,9 +10,7 @@ import pl.game.gamerpg.model.*;
 public class GameLogicServiceImpl implements GameLogicService {
 
     private Player player;
-    private Thief thief;
-    private Guard guard;
-    private Dragon dragon;
+    private Enemy enemy;
     private JavaUtilObjectsDI javaUtilObjectsDI;
 
     @Override
@@ -25,56 +23,31 @@ public class GameLogicServiceImpl implements GameLogicService {
 
     @Override
     public void battleWithThief() {
-        thief.setStatsForThief();
-        thief.setDataToArrayEnemiesAttacks();
+        enemy.setStatsForThief();
+        enemy.setDataToArrayEnemiesAttacks();
 
-        System.out.println("Okazuje się, że jest to okoliczny: " + thief.getCharacterType());
-        System.out.println("o imieniu: " + thief.getName());
+        System.out.println("Okazuje się, że jest to okoliczny: " + enemy.getCharacterType());
+        System.out.println("o imieniu: " + enemy.getName());
 
         while (true) {
             player.setAttackPoints(javaUtilObjectsDI.random().nextInt(50));
-            thief.setAttackPoints(javaUtilObjectsDI.random().nextInt(50));
+            enemy.setAttackPoints(javaUtilObjectsDI.random().nextInt(50));
 
                 System.out.println("Wybierz atak: ");
 
                 player.playerChooseAction();
                 System.out.println("Twoje punkty ataku: " + player.getAttackPoints());
 
-                thief.setLifePointsAfterAttack(thief.getLifePoints() - player.getAttackPoints());
-                thief.setLifePoints(thief.getLifePointsAfterAttack());
+                player.battleMethodForAllEnemies();
 
-                if (thief.getLifePointsAfterAttack() > 0) {
-                    System.out.println("Energia " + thief.getCharacterType()
-                                                            + " po ataku: "
-                                                            + thief.getLifePointsAfterAttack());
-                }
-
-                System.out.println(thief.getCharacterType() + " atakuje. Korzysta z: "
-                                                                            + thief.enemyChooseAction()
-                                                                            + " zadaje punkty obrażeń: "
-                                                                            + thief.getLifePoints());
-
-                player.setLifePointsAfterAttack(player.getLifePoints() - thief.getAttackPoints());
-                player.setLifePoints(player.getLifePointsAfterAttack());
-
-                if (player.getLifePointsAfterAttack() > 0) {
-                    System.out.println("Twoja energia po ataku: " + player.getLifePointsAfterAttack());
-                }
-
-                if (player.getLifePoints() <= 0
-                        || thief.getLifePoints() <= 0
-                        || player.getLifePoints() == thief.getLifePoints()) {
-                    System.out.println(player.resultBattle());
-                }
-
-            if (player.getLifePoints() <= 0 || thief.getLifePoints() <= 0) {
+            if (player.getLifePoints() <= 0 || enemy.getLifePoints() <= 0) {
                 break;
             }
         }
 
         if (player.resultBattle() == ResultBattle.YOU_LOSE) {
             System.out.println("MIAŁEŚ MNIEJ PUNKTÓW ŻYCIA OD"
-                                                    + thief.getCharacterType()
+                                                    + enemy.getCharacterType()
                                                     + " ZACZYNAMY OD POCZĄTKU: ");
             player.setLifePoints(150);
             storyAboutAdventure();
@@ -86,7 +59,9 @@ public class GameLogicServiceImpl implements GameLogicService {
     @Override
     public void battleWithGuard() {
         player.setLifePoints(160);
-        guard.setStatsForGuard();
+        enemy.setStatsForGuard();
+        enemy.setDataToArrayEnemiesAttacks();
+
         System.out.println("Posiadasz teraz " + player.getLifePoints() +" punktów energii.");
         System.out.println("Jesteś w połowie drogi do celu.");
         System.out.println("Zmierzasz w kierunku mostu na którym stoi strażnik, który nie chce Cię przepuścić.");
@@ -94,55 +69,31 @@ public class GameLogicServiceImpl implements GameLogicService {
 
         while (true) {
             player.setAttackPoints(javaUtilObjectsDI.random().nextInt(60));
-            guard.setAttackPoints(javaUtilObjectsDI.random().nextInt(50));
+            enemy.setAttackPoints(javaUtilObjectsDI.random().nextInt(50));
 
             System.out.println("Wybierz atak: ");
             player.playerChooseAction();
 
             System.out.println("Twoje punkty ataku: " + player.getAttackPoints());
-            guard.enemyChooseAction();
+            enemy.enemyChooseAction();
 
-            if (guard.enemyChooseAction() == CharacterAttackEnemy.BLOKADA) {
+            if (enemy.enemyChooseAction() == CharacterAttackEnemy.BLOKADA) {
                 player.setAttackPoints(0);
-                System.out.println(guard.getCharacterType() + " zablokował twój atak. "
+                enemy.setAttackPoints(0);
+                System.out.println(enemy.getCharacterType() + " zablokował twój atak. "
                                                                                 + " Twoje punkty ataku: "
                                                                                 + player.getAttackPoints());
             }
 
-            guard.setLifePointsAfterAttack(guard.getLifePoints() - player.getLifePointsAfterAttack());
-            guard.setLifePoints(guard.getLifePointsAfterAttack());
+            player.battleMethodForAllEnemies();
 
-            if (guard.getLifePointsAfterAttack() > 0){
-                System.out.println("Energia " + guard.getCharacterType()
-                                                                        + " po ataku "
-                                                                        + guard.getLifePointsAfterAttack());
-            }
-
-            System.out.println(guard.getCharacterType() + " atakuje! Koszysta z : "
-                                                                        + guard.enemyChooseAction()
-                                                                        + " i zadaje punkty obrażeń: "
-                                                                        + guard.getAttackPoints());
-
-            player.setLifePointsAfterAttack(player.getLifePoints() - guard.getAttackPoints());
-            player.setLifePoints(player.getLifePointsAfterAttack());
-
-            if (player.getLifePointsAfterAttack() > 0) {
-                System.out.println("Twoja energia po ataku: " + player.getLifePointsAfterAttack());
-            }
-
-            if (player.getLifePoints() <= 0 ||
-                    guard.getLifePoints() <= 0 ||
-                    player.getLifePoints() == guard.getLifePoints()) {
-                System.out.println(player.resultBattle());
-            }
-
-            if (player.getLifePoints() <= 0 || guard.getLifePoints() <= 0) {
+            if (player.getLifePoints() <= 0 || enemy.getLifePoints() <= 0) {
                 break;
             }
 
             if (player.resultBattle() == ResultBattle.YOU_LOSE){
                 System.out.println("MIAŁEŚ MNIEJ PUNKTÓW ŻYCIA OD: "
-                                                    + guard.getCharacterType()
+                                                    + enemy.getCharacterType()
                                                     + " ZACZYNAMY OD POCZĄTKU.");
                 player.setLifePoints(160);
                 battleWithGuard();
